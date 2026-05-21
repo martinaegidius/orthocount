@@ -1,0 +1,4 @@
+defaults:
+  - datasets: 2025_downsampled_20cm
+  - tiling: default
+
