@@ -1,8 +1,0 @@
-datasets:
-  year: 2025
-  geotiff_filepath: data/2025/geotiff/2025-07-02-Roskilde-Festival_20cm.tif
-  shape_filepath: camping_zones.shp
-  downsampled: true
-tiling:
-  im_size: 512
-  overlap: 64

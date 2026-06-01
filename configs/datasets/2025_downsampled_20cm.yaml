@@ -1,5 +1,5 @@
-
 year: 2025
-geotiff_filepath: data/2025/geotiff/2025-07-02-Roskilde-Festival_20cm.tif
-shape_filepath: camping_zones.shp
+geotiff_filepath: data/2025/coarse/geotiff/2025-07-02-Roskilde-Festival_20cm.tif
+shape_filepath: data/2025/coarse/geotiff/camping_zones.shp
 downsampled: True
+dataset_name: coarse_testing

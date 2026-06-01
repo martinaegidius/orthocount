@@ -1,6 +1,7 @@
 import os 
 
 import rasterio 
+import gdal
 
 def read_windowed():
     return 

@@ -1,0 +1,13 @@
+
+year: 2025
+src_geotiff_filename: 2025-07-02-Roskilde-Festival.tif #in principle just call it rf.tif for maximal modularity, but it is nice to keep the name for now
+downsample: True
+input_dataset_name: input_resolution
+output_dataset_name: canonical
+physical_pixel_resolution: 0.1 #0.1 #m/pixel, target pixel resolution
+cog: True
+bigtiff: True 
+tiled_reading: True 
+BLOCKSIZE: 512 #
+
+

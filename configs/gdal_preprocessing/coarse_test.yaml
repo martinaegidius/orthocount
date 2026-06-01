@@ -1,0 +1,13 @@
+
+year: 2025
+src_geotiff_filename: 2025-07-02-Roskilde-Festival_20cm.tif
+downsample: True
+input_dataset_name: coarse
+output_dataset_name: coarse_test
+physical_pixel_resolution: 100 #0.2 #0.1 #m/pixel, target pixel resolution
+cog: False
+bigtiff: True 
+tiled_reading: True 
+BLOCKSIZE: 512 #
+
+

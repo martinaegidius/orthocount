@@ -53,3 +53,14 @@ The directory structure of the project looks like this:
 Created using [mlops_template](https://github.com/SkafteNicki/mlops_template),
 a [cookiecutter template](https://github.com/cookiecutter/cookiecutter) for getting
 started with Machine Learning Operations (MLOps).
+
+## Decision logs 
+
+### Resolution
+We tune the canonical pixel resolution to support potential downstream tent-detection. As a result, we use the following [table values](https://www.harald-nyborg.dk/harald-nyborg-festivaltelt-2-personer) for the smallest commonly occuring festival tent: 
+Width: 1,4 m
+Length: 2,05 m
+
+In order to safely be able to detect this size, we will want it to be at least 20 pixels in the shortest dimension. As a result we need $140cm/20pixels = 7 cm/pixel$ resolution. In order to allow potential other users to use the models, the target resolution thus is chosen as 10 cm per pixel unless this proves impractical. 
+
+

@@ -1,2 +1,2 @@
-im_size: 512
-overlap: 64
+im_size: 12 #512
+overlap: 3 #64
