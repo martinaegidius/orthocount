@@ -1,7 +1,7 @@
 defaults:
 #  - datasets: 2025_downsampled_20cm
   - tiling: default
-  - gdal_preprocessing: coarse_test
+  - gdal_preprocessing: canonical #coarse_test
   - storage: hdd #local #hdd
   - _self_
 

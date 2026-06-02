@@ -1,5 +1,5 @@
 docs/site/
-
+outputs/*
 data/*
 geotiff_sample/*
 

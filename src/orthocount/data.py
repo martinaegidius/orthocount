@@ -5,6 +5,7 @@ import time
 
 import geopandas as gpd 
 import hydra
+from loguru import logger 
 import numpy as np 
 from omegaconf import DictConfig, OmegaConf
 from osgeo import gdal 
@@ -93,7 +94,7 @@ def preprocess(cfg: DictConfig) -> None:
     Args:
         cfg (DictConfig): hydra main config
     """
-    print("Tiling...")
+    logger.info("Tiling...")
     dataset = RFTifOrthophoto(geotiff_path=cfg.paths.output_tiff, vector_path=cfg.paths.shape_filepath,im_size=cfg.tiling.im_size,overlap=cfg.tiling.overlap)
     dataset.preprocess()
 
@@ -107,22 +108,22 @@ def gdal_preprocess(cfg: DictConfig) -> None:
     with gdal.Open(input_tiff) as ds:
         #info = gdal.Info(ds, format='json')
         #del info["stac"]  # to avoid cluttering below output
-        #print(info.keys())
+        #logger.info(info.keys())
         gt = ds.GetGeoTransform()
     
         pixel_res_x = gt[1]
         pixel_res_y = gt[5]
     
-        print(f"Pixel Resolution X: {pixel_res_x}") 
-        print(f"Pixel Resolution Y: {pixel_res_y}") 
+        logger.info(f"Pixel Resolution X: {pixel_res_x}") 
+        logger.info(f"Pixel Resolution Y: {pixel_res_y}") 
     
         assert np.isclose(np.abs(pixel_res_x),np.abs(pixel_res_y)), "Error - pixel pitch is unequal. Check tiff. Aborting procedures"
     target_resolution = sampling_cfg.physical_pixel_resolution
     #output_tiff = output_dir / f"output_{target_resolution}m_cog.tif" <- moved to configs 
-    print(cfg)
-    print(cfg.paths.src_tiff)
-    print(cfg.paths.processed_dir)
-    print(output_dir)
+    logger.info(cfg)
+    logger.info(cfg.paths.src_tiff)
+    logger.info(cfg.paths.processed_dir)
+    logger.info(output_dir)
     gdal_convert(str(input_tiff), str(cfg.paths.output_tiff), target_resolution, cfg=cfg.gdal_preprocessing)
 
 
@@ -134,6 +135,7 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
         "COMPRESS=DEFLATE",
         "PREDICTOR=2",
         "NUM_THREADS=ALL_CPUS",
+        "BIGTIFF=YES"
     ]
     if not cfg.cog:
         creation_options.extend(["TILED=YES", #in cog case is tiled by default
@@ -156,13 +158,13 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
         creationOptions=creation_options
     )
     
-    print(f"Warping {input_path} to {output_path} at {target_res}m resolution...")
+    logger.info(f"Warping {input_path} to {output_path} at {target_res}m resolution...")
     
     start = time.time()
     gdal.Warp(output_path, input_path, options=warp_options)
     end = time.time()
     
-    print(f"Processing complete. Saved downsampled output to {output_path}.\nElapsed time: {end-start}")
+    logger.info(f"Processing complete. Saved downsampled output to {output_path}.\nElapsed time: {end-start}")
 
 
 if __name__ == "__main__":
