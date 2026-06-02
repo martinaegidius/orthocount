@@ -13,12 +13,12 @@ from PIL import Image
 import rasterio 
 from rasterio import windows 
 from shapely.geometry import box 
-
+from tqdm import tqdm
 
 
 #from torch.utils.data import Dataset
 
-#def downsample(cfg: dict):
+
 
 class RFTifOrthophoto():
     def __init__(self, geotiff_path: Path, vector_path: Path, im_size: int, overlap: int) -> None:
@@ -149,19 +149,30 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
             "RESAMPLING=AVERAGE",
             "OVERVIEWS=IGNORE_EXISTING"]
         )
+
+    #add a progress bar.. 
+    waitbar = tqdm(total = 100)
+
+    # Define callback function for waitbar progress.
+    def _callback_func(info, *args):
+        waitbar.update(info * 100 - waitbar.n)
+    
     # Configure the Warp options
     warp_options = gdal.WarpOptions(
         format=fmt,                    # -of COG
         xRes=target_res,                 # -tr x_res
         yRes=target_res,                 # -tr y_res (GDAL handles the negative sign implicitly here)
         resampleAlg=gdal.GRIORA_Average, # -r average
-        creationOptions=creation_options
+        creationOptions=creation_options,
+        callback = _callback_func
     )
     
     logger.info(f"Warping {input_path} to {output_path} at {target_res}m resolution...")
     
     start = time.time()
-    gdal.Warp(output_path, input_path, options=warp_options)
+    warp = gdal.Warp(output_path, input_path, options=warp_options)
+    warp.FlushCache()
+    waitbar.close()
     end = time.time()
     
     logger.info(f"Processing complete. Saved downsampled output to {output_path}.\nElapsed time: {end-start}")
