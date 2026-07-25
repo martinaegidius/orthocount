@@ -1,8 +1,9 @@
 defaults:
 #  - datasets: 2025_downsampled_20cm
   - tiling: default
-  - gdal_preprocessing: canonical #coarse_test
-  - storage: hdd #local #hdd
+  - gdal_preprocessing: canonical #canonical #coarse_test
+  - storage: local #local #hdd - use hdd for preprocessing step if you dont have space enough
+  - labels: coco
   - _self_
 
 paths: 
@@ -10,3 +11,6 @@ paths:
   processed_dir: "${storage.base_dir}/${gdal_preprocessing.year}/${gdal_preprocessing.output_dataset_name}/geotiff"
   output_tiff: "${storage.base_dir}/${gdal_preprocessing.year}/${gdal_preprocessing.output_dataset_name}/geotiff/${gdal_preprocessing.physical_pixel_resolution}m_cog_${gdal_preprocessing.cog}.tif" #the output of the gdal downsampling procedure
   shape_filepath: "${storage.base_dir}/${gdal_preprocessing.year}/vector/camping_zones.shp" #used for tiling, annotated using QGIS
+  labels_filepath: "${storage.base_dir}/${gdal_preprocessing.year}/${gdal_preprocessing.output_dataset_name}/annotations/${labels.filename}"
+  tile_dir: "${storage.base_dir}/${gdal_preprocessing.year}/${gdal_preprocessing.output_dataset_name}/tiles"
+  

@@ -86,7 +86,7 @@ class RFTifOrthophoto():
                             manifest_file.write(json.dumps(file_metadata) + "\n")
                             file_counter+=1
                     
-@hydra.main(version_base=None, config_path="../../configs", config_name="config")   
+@hydra.main(version_base=None, config_path="../../../configs", config_name="config")   
 def preprocess(cfg: DictConfig) -> None:
     """
     Is run directly together with the downsample pipeline (or at least be called with the corresponding configuration which uses the gdal_preprocessing configuration file for determining output_tiff)
@@ -98,7 +98,7 @@ def preprocess(cfg: DictConfig) -> None:
     dataset = RFTifOrthophoto(geotiff_path=cfg.paths.output_tiff, vector_path=cfg.paths.shape_filepath,im_size=cfg.tiling.im_size,overlap=cfg.tiling.overlap)
     dataset.preprocess()
 
-@hydra.main(version_base=None, config_path="../../configs", config_name="config")   
+@hydra.main(version_base=None, config_path="../../../configs", config_name="config")   
 def gdal_preprocess(cfg: DictConfig) -> None:
     sampling_cfg = cfg.gdal_preprocessing 
     input_tiff = cfg.paths.src_tiff
@@ -157,18 +157,26 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
     def _callback_func(info, *args):
         waitbar.update(info * 100 - waitbar.n)
     
-    # Configure the Warp options
+    #simply too slow. Add geographic bounds to the gdal_preprocessing config. 
+    roi_bounds = cfg.get("roi_bounds", None) #[minX, minY, maxX, maxY]
+    
+    if roi_bounds:
+        logger.info(f"Cropping to geographic bounds: {roi_bounds}")
+    else:
+        logger.info("No ROI bounds provided. Processing full image extent.")
+    
     warp_options = gdal.WarpOptions(
         format=fmt,                    # -of COG
         xRes=target_res,                 # -tr x_res
         yRes=target_res,                 # -tr y_res (GDAL handles the negative sign implicitly here)
         resampleAlg=gdal.GRIORA_Average, # -r average
         creationOptions=creation_options,
+        outputBounds=roi_bounds,
         callback = _callback_func
     )
     
     logger.info(f"Warping {input_path} to {output_path} at {target_res}m resolution...")
-    
+
     start = time.time()
     warp = gdal.Warp(output_path, input_path, options=warp_options)
     warp.FlushCache()
@@ -176,7 +184,7 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
     end = time.time()
     
     logger.info(f"Processing complete. Saved downsampled output to {output_path}.\nElapsed time: {end-start}")
-
+    #https://gdal.org/en/stable/programs/gdalwarp.html
 
 if __name__ == "__main__":
     gdal_preprocess()

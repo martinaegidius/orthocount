@@ -9,5 +9,5 @@ cog: False
 bigtiff: True 
 tiled_reading: True 
 BLOCKSIZE: 512 #
-
+roi_bounds: [692360, 6166385, 695723, 6169071] #format: [minX, minY, maxX, maxY]. In principle better to find based on shapefile and geopandas/rasterio, but alas
 
