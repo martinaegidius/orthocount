@@ -7,10 +7,10 @@ name = "orthocount"
 version = "0.0.1"
 description = "End-to-end geospatial computer vision pipeline for counting festival tents and pavilions from aerial orthophotos."
 authors = [
-  { name = "Martin Aegidius", email = "your@email.com" },
+  { name = "Martin Aegidius", email = "martinmaegidius@gmail.com.com" },
 ]
 license = { file = "LICENSE" }
-keywords = ["machine learning", "MLOps"]
+keywords = ["Orthophoto Object Detection", "Computer Vision", "Sustainability Accounting"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",

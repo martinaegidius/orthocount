@@ -1,4 +1,5 @@
-torch==2.6.0
+#torch==2.6.0 - manual installation required to fit your architecture - I use pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 typer==0.15.2
 fastapi==0.115.12
 uvicorn==0.34.2
+

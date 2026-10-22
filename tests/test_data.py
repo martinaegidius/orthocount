@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 
-from orthocount.data import MyDataset
+from orthocount.preprocess import MyDataset
 
 
 def test_my_dataset():

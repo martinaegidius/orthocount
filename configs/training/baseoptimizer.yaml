@@ -1,0 +1,14 @@
+training:
+  learning_rate: 0.0001
+  max_epochs: 300
+  val_every: 1
+  batch_size: 1
+  frac_train: 0.6
+  overfit: false
+  N_overfit_samples: 8
+  accumulate_grad_batch_size: 1 #sequential batching (when memory is too low to actually create a proper batch)
+
+model: fasterrcnn
+
+labels:
+  use_classes: [1,2,3] ##possibilities: {1: 'white_pavillion', 2: 'rented_pavillion', 3: 'other_pavillion', 4: 'broken_white_pavillion', 5: 'rectangular_pavillion'}

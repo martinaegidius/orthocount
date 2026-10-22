@@ -178,6 +178,7 @@ def gdal_convert(input_path: str, output_path: str, target_res: float, cfg):
     logger.info(f"Warping {input_path} to {output_path} at {target_res}m resolution...")
 
     start = time.time()
+    breakpoint()
     warp = gdal.Warp(output_path, input_path, options=warp_options)
     warp.FlushCache()
     waitbar.close()

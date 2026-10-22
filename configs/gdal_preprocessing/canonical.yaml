@@ -1,6 +1,8 @@
 
-year: 2025
-src_geotiff_filename: 2025-07-02-Roskilde-Festival.tif #in principle just call it rf.tif for maximal modularity, but it is nice to keep the name for now
+#year: 2025
+#src_geotiff_filename: 2025-07-02-Roskilde-Festival.tif #in principle just call it rf.tif for maximal modularity, but it is nice to keep the name for now
+year: 2026
+src_geotiff_filename: RF2026_GSD10cm.tif
 downsample: True
 input_dataset_name: input_resolution
 output_dataset_name: canonical

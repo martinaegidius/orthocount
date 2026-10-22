@@ -1,0 +1,14 @@
+visualize_evaluation_preds: true
+evaluate_train: true
+
+filtering:
+  confidence_filter:
+    apply: true
+    confidence_threshold: 0.8 #currently seems very secure - so we should filter based on this
+  area_filter:
+    apply: true
+    min_area: 750 #9m2 in 0.1cm resolution -> 30 * 30 = 900 px^2, but we need some leighway as detections will not be perfect
+    max_area: 2000 #assuming square -> worst case is 45 degrees rotation, 1800 px^2 + leighway. optional param, if null un-bounded.
+  nms: 
+    apply: true
+    iou_threshold: 0.25

@@ -2,6 +2,10 @@ docs/site/
 outputs/*
 data/*
 geotiff_sample/*
+checkpoints/
+predictions/
+lightning_logs/
+*.pdf
 
 # test cache
 manual_test/

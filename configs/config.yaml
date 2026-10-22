@@ -1,9 +1,12 @@
 defaults:
 #  - datasets: 2025_downsampled_20cm
   - tiling: default
-  - gdal_preprocessing: canonical #canonical #coarse_test
+  - gdal_preprocessing: coarse #canonical #canonical #coarse_test
   - storage: local #local #hdd - use hdd for preprocessing step if you dont have space enough
   - labels: coco
+  - training: baseoptimizer
+  - evaluation: evaluate
+  - prediction: prediction
   - _self_
 
 paths: 
